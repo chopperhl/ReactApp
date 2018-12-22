@@ -4,7 +4,8 @@
   "description": "react web app",
   "main": "src/index.js",
   "scripts": {
-    "build": "webpack"
+    "build": "webpack",
+    "start": "webpack-dev-server"
   },
   "author": "chopperhl",
   "license": "ISC",
@@ -22,6 +23,7 @@
     "html-webpack-plugin": "^3.2.0",
     "style-loader": "^0.23.1",
     "webpack": "^4.28.2",
-    "webpack-cli": "^3.1.2"
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.13"
   }
 }
