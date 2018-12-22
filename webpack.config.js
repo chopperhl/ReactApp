@@ -1,5 +1,4 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const webpack = require('webpack');
 const path = require('path');
 
 
@@ -7,7 +6,7 @@ const config = {
     mode: "development",
     entry: './src/index.js',
     output: {
-        filename: 'bundle.js',
+        filename: '[hash].bundle.js',
         path: path.resolve(__dirname, 'dist')
     },
     resolve: {
