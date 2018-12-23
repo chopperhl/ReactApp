@@ -2,6 +2,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const UglifyESPlugin = require('uglifyjs-webpack-plugin');
 
 const config = {
         mode: "development",
@@ -35,7 +36,7 @@ const config = {
                     test: /\.css$/,
                     use: ['style-loader', 'css-loader', {
                         loader: "postcss-loader", options: {
-                            plugins: [require("autoprefixer")("last 20 versions")]
+                            plugins: [require("autoprefixer")("last 2 versions")]
                         }
                     }]
                 },
@@ -43,7 +44,7 @@ const config = {
                     test: /\.less$/,
                     use: ['style-loader', 'css-loader', {
                         loader: "postcss-loader", options: {
-                            plugins: [require("autoprefixer")("last 20 versions")]
+                            plugins: [require("autoprefixer")("last 2 versions")]
                         }
                     }, {
                         loader: 'less-loader', // compiles Less to CSS
@@ -74,18 +75,31 @@ const config = {
                 },
             ]
         },
-        plugins:
-            [
-                new webpack.HotModuleReplacementPlugin(),
-                new CleanWebpackPlugin(
-                    ['dist/*.js'], {
-                        root: __dirname,
-                        verbose: true,
-                        dry: false
+        plugins: [
+            new webpack.HotModuleReplacementPlugin(),
+            new CleanWebpackPlugin(
+                ['dist/*.js'], {
+                    root: __dirname,
+                    verbose: true,
+                    dry: false
+                }
+            ),
+            new UglifyESPlugin({
+                uglifyOptions: {
+                    compress: {
+                        warnings: false,
+                        drop_console: true,
+                        collapse_vars: true,
+                        reduce_vars: true,
+                    },
+                    output: {
+                        beautify: false,
+                        comments: false,
                     }
-                ),
-                new HtmlWebpackPlugin({template: './template/index.html'})
-            ]
+                }
+            }),
+            new HtmlWebpackPlugin({template: './template/index.html'})
+        ]
     }
 ;
 
