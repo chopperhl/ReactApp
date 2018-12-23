@@ -1,8 +1,12 @@
-import {Menu, Icon, Layout, Breadcrumb} from 'antd';
+import {Menu, Icon, Layout, Breadcrumb, Avatar, Col, Row, Badge} from 'antd';
 
 
 import React from "react";
 import './NavBar.less'
+import AntLogo from '../../img/ant-logo.svg'
+import router from '../router'
+import {Link} from "react-router-dom";
+import {withRouter} from 'react-router-dom'
 
 const {Header, Sider, Content} = Layout;
 const SubMenu = Menu.SubMenu;
@@ -20,55 +24,102 @@ class NavBar extends React.Component {
             collapsed: !this.state.collapsed,
         });
     };
+    onMenuClick = (value) => {
+        let path = Array.isArray(value.path) ? value.path[0] : value.path;
+        this.props.history.push(path);
+    };
 
+    renderMenuList = () => {
+        return router.map(value => {
+            if (!value.show) return null;
+            return (
+                <Menu.Item key={value.key} onClick={this.onMenuClick.bind(this, value)}>
+                    <Icon type={value.icon || 'table'}/>
+                    <span>{value.key}</span>
+                </Menu.Item>
+
+            )
+        });
+
+    };
+
+
+    getSelectedKey = () => {
+        const url = this.props.location.pathname;
+        for (let i = 0; i < router.length; i++) {
+            if (Array.isArray(router[i].path)) {
+                for (let j = 0; j < router[i].path.length; j++) {
+                    if (router[i].path[j] === url) return router[i].key;
+                }
+            }
+            if (router[i].path === url) return router[i].key;
+        }
+        return "Home";
+
+    };
+    getSelectedPath = () => {
+        const url = this.props.location.pathname;
+        for (let i = 0; i < router.length; i++) {
+            if (Array.isArray(router[i].path)) {
+                for (let j = 0; j < router[i].path.length; j++) {
+                    if (router[i].path[j] === url) return router[i].pathName;
+                }
+            }
+            if (router[i].path === url) return router[i].pathName;
+        }
+
+        return router[0].pathName;
+    };
 
     render() {
         return (
             <Layout className="main-container">
                 <Sider
+                    className="nav-bar"
                     width={260}
                     trigger={null}
                     collapsible
                     collapsed={this.state.collapsed}>
-                    <div className="logo"/>
-                    <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-                        <Menu.Item key="1">
-                            <Icon type="user"/>
-                            <span>nav 1</span>
-                        </Menu.Item>
-                        <Menu.Item key="2">
-                            <Icon type="video-camera"/>
-                            <span>nav 2</span>
-                        </Menu.Item>
-                        <Menu.Item key="3">
-                            <Icon type="upload"/>
-                            <span>nav 3</span>
-                        </Menu.Item>
+                    <div className="logo"><span><img src={AntLogo}/>Ant Design Admin</span></div>
+                    <Menu theme="dark" mode="inline" defaultSelectedKeys={[this.getSelectedKey()]}>
+                        {this.renderMenuList()}
                     </Menu>
                 </Sider>
-                <Layout>
-                    <Header style={{background: '#fff', padding: 0}}>
+                <Layout className="content">
+                    <Header className="main-header">
                         <Icon
                             className="trigger"
                             type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
-                            onClick={this.toggle}
-                        />
+                            onClick={this.toggle}/>
+                        <div className="header-tools">
+                            <span className="tools-item">Chopperhl</span>
+                            <span className="tools-item">
+                                <Avatar icon="user" size={"small"} style={{verticalAlign: 'middle'}}/>
+                            </span>
+                            <span className="tools-item">
+                                <Badge count={5}>
+                                    <Icon type="bell" style={{fontSize: 16}}/>
+                                </Badge>
+                            </span>
+                            <span className="tools-item">
+                                <Icon type="search" style={{fontSize: 19}}/>
+                            </span>
+                        </div>
                     </Header>
-                    <Breadcrumb style={{margin: '16px'}}>
-                        <Breadcrumb.Item>Home</Breadcrumb.Item>
-                        <Breadcrumb.Item>List</Breadcrumb.Item>
-                        <Breadcrumb.Item>App</Breadcrumb.Item>
-                    </Breadcrumb>
-                    <Content style={{
-                        margin: '0 16px 24px 16px', padding: 24, background: '#fff'
-                    }}
-                    >
-                        {this.props.children}
-                    </Content>
+                    <div className="scroll-box">
+                        <Breadcrumb className="bread-crumb">
+                            {this.getSelectedPath().map((value, i) => {
+                                return <Breadcrumb.Item key={i}>{value}</Breadcrumb.Item>
+                            })}
+                        </Breadcrumb>
+                        <Content className="comp-content">
+                            {this.props.children}
+                        </Content>
+                    </div>
                 </Layout>
             </Layout>
         );
     }
 }
 
-export default NavBar;
+export default withRouter(NavBar);

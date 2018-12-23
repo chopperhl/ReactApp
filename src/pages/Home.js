@@ -1,79 +1,57 @@
-import {Table, Divider, Tag} from 'antd';
+import {Table, Divider, Tag, Icon, List, Avatar} from 'antd';
 import React from "react";
 
-const {Column, ColumnGroup} = Table;
+const {Column} = Table;
 
 class Home extends React.Component {
+    getData = () => {
+        const listData = [];
+        for (let i = 0; i < 23; i++) {
+            listData.push({
+                href: 'http://ant.design',
+                title: `ant design part ${i}`,
+                avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+                description: 'Ant Design, a design language for background applications, is refined by Ant UED Team.',
+                content: 'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
+            });
+        }
 
+        const IconText = ({type, text}) => (<span><Icon type={type} style={{marginRight: 8}}/>{text}</span>);
+
+        return (
+            <List
+                style={{padding: 16}}
+                itemLayout="vertical"
+                size="large"
+                pagination={{
+                    onChange: (page) => {
+                        console.log(page);
+                    },
+                    pageSize: 3,
+                }}
+                dataSource={listData}
+                renderItem={item => (
+                    <List.Item
+                        key={item.title}
+                        actions={[<IconText type="star-o" text="156"/>, <IconText type="like-o" text="156"/>,
+                            <IconText type="message" text="2"/>]}
+                        extra={<img width={272} alt="logo"
+                                    src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"/>}
+                    >
+                        <List.Item.Meta
+                            avatar={<Avatar src={item.avatar}/>}
+                            title={<a href={item.href}>{item.title}</a>}
+                            description={item.description}
+                        />
+                        {item.content}
+                    </List.Item>
+                )}
+            />
+        );
+    };
 
     render() {
-
-        const data = [{
-            key: '1',
-            firstName: 'John',
-            lastName: 'Brown',
-            age: 32,
-            address: 'New York No. 1 Lake Park',
-            tags: ['nice', 'developer'],
-        }, {
-            key: '2',
-            firstName: 'Jim',
-            lastName: 'Green',
-            age: 42,
-            address: 'London No. 1 Lake Park',
-            tags: ['loser'],
-        }, {
-            key: '3',
-            firstName: 'Joe',
-            lastName: 'Black',
-            age: 32,
-            address: 'Sidney No. 1 Lake Park',
-            tags: ['cool', 'teacher'],
-        }];
-        return (
-            <Table dataSource={data}>
-
-                <Column
-                    title="First Name"
-                    dataIndex="firstName"
-                    key="firstName"
-                />
-                <Column
-                    title="Last Name"
-                    dataIndex="lastName"
-                    key="lastName"
-                />
-
-                <Column
-                    title="Age"
-                    dataIndex="age"
-                    key="age"
-                />
-                <Column
-                    title="Address"
-                    dataIndex="address"
-                    key="address"
-                />
-                <Column
-                    title="Tags"
-                    dataIndex="tags"
-                    key="tags"
-                    render={tags => (
-                        <span>
-          {tags.map(tag => <Tag color="blue" key={tag}>{tag}</Tag>)}
-        </span>
-                    )}
-                />
-                <Column
-                    title="Action"
-                    key="action"
-                    render={(text, record) => (
-                        <span>
-                            <a href="javascript:;">Invite {record.lastName}</a>
-                            <Divider type="vertical"/>
-                            <a href="javascript:;">Delete</a>
-                        </span>)}/>
-            </Table>)
+        return this.getData()
     }
 }
 

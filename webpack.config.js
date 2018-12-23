@@ -1,6 +1,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 const webpack = require('webpack');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const config = {
         mode: "development",
@@ -23,19 +24,35 @@ const config = {
         module: {
             rules: [
                 {
+                    test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+                    loader: 'url-loader',
+                    options: {
+                        limit: 10000,
+                        name: 'img/[name].[hash:7].[ext]'
+                    }
+                },
+                {
                     test: /\.css$/,
-                    use: ['style-loader', 'css-loader']
+                    use: ['style-loader', 'css-loader', {
+                        loader: "postcss-loader", options: {
+                            plugins: [require("autoprefixer")("last 20 versions")]
+                        }
+                    }]
                 },
                 {
                     test: /\.less$/,
                     use: ['style-loader', 'css-loader', {
+                        loader: "postcss-loader", options: {
+                            plugins: [require("autoprefixer")("last 20 versions")]
+                        }
+                    }, {
                         loader: 'less-loader', // compiles Less to CSS
                         options: {
-                            modifyVars: {
+                            /*modifyVars: {
                                 'primary-color': '#1DA57A',
                                 'link-color': '#1DA57A',
                                 'border-radius-base': '2px',
-                            },
+                            },*/
                             javascriptEnabled: true,
                         }
                     }]
@@ -60,6 +77,13 @@ const config = {
         plugins:
             [
                 new webpack.HotModuleReplacementPlugin(),
+                new CleanWebpackPlugin(
+                    ['dist/*'], {
+                        root: __dirname,
+                        verbose: true,
+                        dry: false
+                    }
+                ),
                 new HtmlWebpackPlugin({template: './template/index.html'})
             ]
     }

@@ -6,45 +6,77 @@
   top: 0;
   bottom: 0;
   .nav-bar {
-    position: fixed;
-    left: 0;
-    width: 256px;
-    top: 0;
-    bottom: 0;
-    overflow-x: hidden;
-    overflow-y: scroll;
+    box-shadow: 1px 0 4px rgba(0, 21, 41, .08);
+  }
+  .trigger {
+    font-size: 18px;
+    line-height: 64px;
+    padding: 0 24px;
+    cursor: pointer;
+    transition: color .3s;
+  }
+
+  .trigger:hover {
+    color: #1890ff;
+  }
+
+  .logo {
+    background-color: #002140;
+    height: 64px;
+    padding: 0 16px;
+    overflow: hidden;
+    span {
+      cursor: pointer;
+      color: white;
+      font-weight: bold;
+      font-size: 16px;
+      height: 64px;
+      line-height: 64px;
+      display: inline-block;
+      text-align: center;
+      img {
+        margin-right: 10px;
+        height: 32px;
+        width: 32px;
+      }
+    }
   }
   .content {
-    position: fixed;
-    right: 0;
-    left: 256px;
-    top: 0;
-    bottom: 0;
-    overflow-x: hidden;
-    overflow-y: scroll;
+    .scroll-box {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      .bread-crumb {
+        margin: 16px;
+      }
+      .comp-content {
+        margin: 0 16px 16px 16px;
+        background-color: white;
+        flex: 1;
+      }
+    }
+    .main-header {
+      background: #fff;
+      padding: 0;
+      position: relative;
+      box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
+      .header-tools {
+        position: absolute;
+        top: 0;
+        left: 40px;
+        overflow: hidden;
+        right: 16px;
+        height: 100%;
+        .tools-item {
+          cursor: pointer;
+          text-align: center;
+          min-width: 40px;
+          overflow: hidden;
+          float: right;
+          display: inline-block;
+          height: 100%;
+        }
+      }
+    }
   }
-  .content::-webkit-scrollbar {
-    display: none;
-  }
-  .nav-bar::-webkit-scrollbar {
-    display: none;
-  }
-}
-
-.trigger {
-  font-size: 18px;
-  line-height: 64px;
-  padding: 0 24px;
-  cursor: pointer;
-  transition: color .3s;
-}
-
-.trigger:hover {
-  color: #1890ff;
-}
-
-.logo {
-  height: 32px;
-  background: rgba(255, 255, 255, .2);
-  margin: 16px;
 }

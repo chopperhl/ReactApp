@@ -1,21 +1,43 @@
 import React from "react";
 import {BrowserRouter, Switch, Route} from 'react-router-dom'
-import Home from './pages/Home'
-import Login from './pages/Login'
 import NavBar from "./comp/NavBar";
-import Table from './pages/Table';
+import router from './router'
 
 export default class App extends React.Component {
+
+    getRouters = () => {
+        let showCompList = [];
+        let compList = [];
+        router.forEach(value => {
+            if (Array.isArray(value.path)) {
+                value.path.forEach(v => {
+                    if (value.show) {
+                        showCompList.push(<Route key={showCompList.length} exact={true} path={v}
+                                                 component={value.component}/>);
+                    } else {
+                        compList.push(<Route key={compList.length} exact={true} path={v} component={value.component}/>);
+                    }
+                })
+            } else {
+                if (value.show) {
+                    showCompList.push(<Route key={showCompList.length} exact={true} path={value.path}
+                                             component={value.component}/>);
+                } else {
+                    compList.push(<Route key={compList.length} exact={true} path={value.path}
+                                         component={value.component}/>);
+                }
+            }
+        });
+        return <Switch>
+            {compList}
+            <NavBar>{showCompList}</NavBar>
+        </Switch>
+    };
+
     render() {
         return (
             <BrowserRouter>
-                <Switch>
-                    <Route exact={true} path="/login" component={Login}/>
-                    <NavBar>
-                        <Route exact={true} path="/" component={Home}/>
-                        <Route exact={true} path="/table" component={Table}/>
-                    </NavBar>
-                </Switch>
+                {this.getRouters()}
             </BrowserRouter>
 
         );
