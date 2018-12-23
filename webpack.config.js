@@ -78,7 +78,7 @@ const config = {
             [
                 new webpack.HotModuleReplacementPlugin(),
                 new CleanWebpackPlugin(
-                    ['dist/*'], {
+                    ['dist/*.js'], {
                         root: __dirname,
                         verbose: true,
                         dry: false
