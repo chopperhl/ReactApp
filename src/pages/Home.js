@@ -1,7 +1,5 @@
-import {Table, Divider, Tag, Icon, List, Avatar} from 'antd';
+import {Icon, List, Avatar} from 'antd';
 import React from "react";
-
-const {Column} = Table;
 
 class Home extends React.Component {
     getData = () => {
