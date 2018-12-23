@@ -1,0 +1,50 @@
+.main-container {
+  position: absolute;
+  left: 0;
+  right: 0;
+  width: 100%;
+  top: 0;
+  bottom: 0;
+  .nav-bar {
+    position: fixed;
+    left: 0;
+    width: 256px;
+    top: 0;
+    bottom: 0;
+    overflow-x: hidden;
+    overflow-y: scroll;
+  }
+  .content {
+    position: fixed;
+    right: 0;
+    left: 256px;
+    top: 0;
+    bottom: 0;
+    overflow-x: hidden;
+    overflow-y: scroll;
+  }
+  .content::-webkit-scrollbar {
+    display: none;
+  }
+  .nav-bar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.trigger {
+  font-size: 18px;
+  line-height: 64px;
+  padding: 0 24px;
+  cursor: pointer;
+  transition: color .3s;
+}
+
+.trigger:hover {
+  color: #1890ff;
+}
+
+.logo {
+  height: 32px;
+  background: rgba(255, 255, 255, .2);
+  margin: 16px;
+}

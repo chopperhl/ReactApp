@@ -44,8 +44,12 @@ const config = {
                     test: /\.js|jsx$/, use: [{
                         loader: "babel-loader",
                         options: {
-                            presets: [
-                                "env", "react"
+                            presets: [[
+                                "env", {
+                                    targets: {
+                                        browsers: ['> 1%', 'last 2 versions']
+                                    }
+                                }], "react", "stage-2"
                             ]
                         }
                     }],
