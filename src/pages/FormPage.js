@@ -48,7 +48,7 @@ class FormPage extends React.Component {
         };
         return (
             <Form
-                style={{padding: 40}}
+                style={{padding: 40,backgroundColor: 'white',marginBottom: 16}}
                 onSubmit={this.handleSubmit}>
                 <Form.Item
                     {...formItemLayout}

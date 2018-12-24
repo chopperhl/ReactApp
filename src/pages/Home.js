@@ -18,7 +18,7 @@ class Home extends React.Component {
 
         return (
             <List
-                style={{padding: 16}}
+                style={{padding: 16, backgroundColor: 'white', marginBottom: 16}}
                 itemLayout="vertical"
                 size="large"
                 pagination={{
