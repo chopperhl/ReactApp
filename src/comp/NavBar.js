@@ -5,11 +5,10 @@ import React from "react";
 import './NavBar.less'
 import AntLogo from '../../img/ant-logo.svg'
 import router from '../router'
-import {Link} from "react-router-dom";
 import {withRouter} from 'react-router-dom'
 
 const {Header, Sider, Content} = Layout;
-const SubMenu = Menu.SubMenu;
+
 
 class NavBar extends React.Component {
     constructor(props) {
