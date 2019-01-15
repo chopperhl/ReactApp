@@ -1,5 +1,6 @@
 import {Menu, Icon, Layout, Breadcrumb, Avatar, Col, Row, Badge} from 'antd';
 
+const SubMenu = Menu.SubMenu;
 
 import React from "react";
 import './NavBar.less'
@@ -24,51 +25,42 @@ class NavBar extends React.Component {
         });
     };
     onMenuClick = (value) => {
-        let path = Array.isArray(value.path) ? value.path[0] : value.path;
+        let path = value.path;
         this.props.history.push(path);
     };
 
     renderMenuList = () => {
         return router.map(value => {
             if (!value.show) return null;
-            return (
-                <Menu.Item key={value.key} onClick={this.onMenuClick.bind(this, value)}>
-                    <Icon type={value.icon || 'table'}/>
-                    <span>{value.key}</span>
-                </Menu.Item>
+            if (value.children) {
+                const submenus = value.children.map(v => {
+                    return (
+                        <Menu.Item key={v.key} onClick={this.onMenuClick.bind(this, v)}>
+                            <Icon type={v.icon || 'table'}/>
+                            <span>{v.key}</span>
+                        </Menu.Item>)
+                });
+                return (
+                    <SubMenu key={value.key} title={
+                        <span>
+                            <Icon type={value.icon || 'table'}/>
+                            <span>{value.key}</span>
+                        </span>
+                    }>
+                        {submenus}
+                    </SubMenu>)
+            } else {
+                return (
+                    <Menu.Item key={value.key} onClick={this.onMenuClick.bind(this, value)}>
+                        <Icon type={value.icon || 'table'}/>
+                        <span>{value.key}</span>
+                    </Menu.Item>)
+            }
 
-            )
         });
 
     };
 
-
-    getSelectedKey = () => {
-        const url = this.props.location.pathname;
-        for (let i = 0; i < router.length; i++) {
-            if (Array.isArray(router[i].path)) {
-                for (let j = 0; j < router[i].path.length; j++) {
-                    if (router[i].path[j] === url) return router[i].key;
-                }
-            }
-            if (router[i].path === url) return router[i].key;
-        }
-        return "Home";
-
-    };
-    getSelectedPath = () => {
-        const url = this.props.location.pathname;
-        for (let i = 0; i < router.length; i++) {
-            if (Array.isArray(router[i].path)) {
-                for (let j = 0; j < router[i].path.length; j++) {
-                    if (router[i].path[j] === url) return router[i].pathName;
-                }
-            }
-            if (router[i].path === url) return router[i].pathName;
-        }
-
-        return router[0].pathName;
-    };
 
     render() {
         return (
@@ -80,7 +72,7 @@ class NavBar extends React.Component {
                     collapsible
                     collapsed={this.state.collapsed}>
                     <div className="logo"><span><img src={AntLogo}/>Ant Design Admin</span></div>
-                    <Menu theme="dark" mode="inline" defaultSelectedKeys={[this.getSelectedKey()]}>
+                    <Menu theme="dark" mode="inline" defaultSelectedKeys={["/home"]}>
                         {this.renderMenuList()}
                     </Menu>
                 </Sider>
@@ -107,9 +99,7 @@ class NavBar extends React.Component {
                     </Header>
                     <div className="scroll-box">
                         <Breadcrumb className="bread-crumb">
-                            {this.getSelectedPath().map((value, i) => {
-                                return <Breadcrumb.Item key={i}>{value}</Breadcrumb.Item>
-                            })}
+                            <Breadcrumb.Item>111</Breadcrumb.Item>
                         </Breadcrumb>
                         <Content className="comp-content">
                             {this.props.children}

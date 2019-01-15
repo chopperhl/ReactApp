@@ -7,8 +7,7 @@ export default [
     {
         show: true,
         key: '首页',
-        path: ['/', '/home'],
-        pathName: ["首页"],
+        path: '/home',
         component: Home,
         icon: 'home'
     },
@@ -16,7 +15,6 @@ export default [
         show: true,
         key: '列表',
         path: '/table',
-        pathName: ["列表"],
         component: TablePage,
         icon: 'table'
     },
@@ -24,11 +22,19 @@ export default [
         show: true,
         key: '表单',
         path: '/form',
-        pathName: ["表单"],
         component: FormPage,
         icon: 'form'
-    }
-    ,
+    },
+    {
+        show: true,
+        key: '一级菜单',
+        icon: 'table',
+        children: [{
+            key: '二级菜单',
+            path: '/test',
+            icon: 'table'
+        }]
+    },
     {
         show: false,
         key: '登录',

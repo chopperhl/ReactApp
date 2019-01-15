@@ -28,10 +28,12 @@ export default class App extends React.Component {
                 }
             }
         });
-        return <Switch>
-            {compList}
-            <NavBar>{showCompList}</NavBar>
-        </Switch>
+        return (
+            <Switch>
+                {compList}
+                <NavBar>{showCompList}</NavBar>
+            </Switch>
+        );
     };
 
     render() {
