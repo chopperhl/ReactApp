@@ -1,5 +1,5 @@
 import React from "react";
-import {BrowserRouter, Switch, Route} from 'react-router-dom'
+import {HashRouter, Switch, Route} from 'react-router-dom'
 import NavBar from "./comp/NavBar";
 import router from './router'
 
@@ -9,38 +9,36 @@ export default class App extends React.Component {
         let showCompList = [];
         let compList = [];
         router.forEach(value => {
-            if (Array.isArray(value.path)) {
-                value.path.forEach(v => {
-                    if (value.show) {
-                        showCompList.push(<Route key={showCompList.length} exact={true} path={v}
-                                                 component={value.component}/>);
-                    } else {
-                        compList.push(<Route key={compList.length} exact={true} path={v} component={value.component}/>);
-                    }
-                })
-            } else {
-                if (value.show) {
-                    showCompList.push(<Route key={showCompList.length} exact={true} path={value.path}
-                                             component={value.component}/>);
+            if (value.show) {
+                if (value.children) {
+                    value.children.forEach(v => {
+                        showCompList.push(<Route key={showCompList.length} exact={true} path={"/" + value.key+"/" + v.key}
+                                                 component={v.component}/>);
+                    });
                 } else {
-                    compList.push(<Route key={compList.length} exact={true} path={value.path}
-                                         component={value.component}/>);
+                    showCompList.push(<Route key={showCompList.length} exact={true} path={"/" + value.key}
+                                             component={value.component}/>);
                 }
+            } else {
+                compList.push(<Route key={compList.length} exact={true} path={"/" + value.key}
+                                     component={value.component}/>);
             }
         });
         return (
             <Switch>
                 {compList}
-                <NavBar>{showCompList}</NavBar>
+                <NavBar>
+                    {showCompList}
+                </NavBar>
             </Switch>
         );
     };
 
     render() {
         return (
-            <BrowserRouter>
+            <HashRouter>
                 {this.getRouters()}
-            </BrowserRouter>
+            </HashRouter>
 
         );
     }

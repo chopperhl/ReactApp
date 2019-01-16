@@ -6,39 +6,48 @@ import FormPage from './pages/FormPage'
 export default [
     {
         show: true,
-        key: '首页',
-        path: '/home',
+        name: '首页',
+        key: '',
         component: Home,
         icon: 'home'
     },
     {
         show: true,
-        key: '列表',
-        path: '/table',
+        name: '首页',
+        key: 'index',
+        component: Home,
+        icon: 'home'
+    },
+    {
+        show: true,
+        name: '列表',
+        key: 'table',
         component: TablePage,
         icon: 'table'
     },
     {
         show: true,
-        key: '表单',
-        path: '/form',
+        name: '表单',
+        key: 'form',
         component: FormPage,
         icon: 'form'
     },
     {
         show: true,
-        key: '一级菜单',
+        name: '一级菜单',
+        key: 'test1',
         icon: 'table',
         children: [{
-            key: '二级菜单',
-            path: '/test',
-            icon: 'table'
+            name: '二级菜单',
+            key: 'test2',
+            icon: 'table',
+            component: TablePage
         }]
     },
     {
         show: false,
-        key: '登录',
-        path: '/login',
+        name: '登录',
+        key: 'login',
         component: Login
     }
 
