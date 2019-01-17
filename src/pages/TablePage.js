@@ -5,7 +5,7 @@ const {Column} = Table;
 
 class MyTable extends Table {
     getDefaultPagination(prop) {
-        let p = super.getDefaultPagination(prop)
+        let p = super.getDefaultPagination(prop);
         return {...p, pageSize: 15}
     }
 
