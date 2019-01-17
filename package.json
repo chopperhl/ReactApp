@@ -4,8 +4,8 @@
   "description": "react web app",
   "main": "index.js",
   "scripts": {
-    "build": "webpack",
-    "start": "webpack-dev-server"
+    "build": "NODE_ENV=prod webpack",
+    "start": "NODE_ENV=dev webpack-dev-server"
   },
   "author": "chopperhl",
   "license": "ISC",
