@@ -3,10 +3,6 @@ const path = require('path');
 const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const UglifyESPlugin = require('uglifyjs-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const extractCss = new ExtractTextPlugin('styles/[name][hash].css');
-const extractLess = new ExtractTextPlugin('styles/[name][hash]-less.css');
-
 
 const config = {
         mode: "development",
