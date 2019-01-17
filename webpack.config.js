@@ -3,6 +3,10 @@ const path = require('path');
 const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const UglifyESPlugin = require('uglifyjs-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const extractCss = new ExtractTextPlugin('styles/[name][hash].css');
+const extractLess = new ExtractTextPlugin('styles/[name][hash]-less.css');
+
 
 const config = {
         mode: "development",
@@ -94,7 +98,30 @@ const config = {
                 }
             }),
             new HtmlWebpackPlugin({template: './template/index.html'})
-        ]
+        ],
+        optimization: {
+            splitChunks: {
+                chunks: 'initial',
+                minSize: 30000,
+                maxSize: 0,
+                minChunks: 1,
+                maxAsyncRequests: 5,
+                maxInitialRequests: 3,
+                automaticNameDelimiter: '-',
+                name: true,
+                cacheGroups: {
+                    vendors: {
+                        test: /[\\/]node_modules[\\/]/,
+                        priority: -10
+                    },
+                    default: {
+                        minChunks: 2,
+                        priority: -20,
+                        reuseExistingChunk: true
+                    }
+                }
+            }
+        }
     }
 ;
 
